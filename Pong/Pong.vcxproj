@@ -73,6 +73,7 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Paddle.h" />
+    <ClInclude Include="Point.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
