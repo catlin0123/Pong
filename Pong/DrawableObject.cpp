@@ -1,6 +1,6 @@
 #include "DrawableObject.h"
 
- DrawableObject::DrawableObject(int x, int y, float color[])
+ DrawableObject::DrawableObject(float x, float y, float color[])
 {
     pnt.x = x; 
     pnt.y = y; 

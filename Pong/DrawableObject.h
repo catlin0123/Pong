@@ -10,7 +10,7 @@ class DrawableObject
         float Color[3];
 
     public:
-        DrawableObject(int x, int y, float color[]);
+        DrawableObject(float x, float y, float color[]);
         DrawableObject(DrawableObject &d); 
         virtual void Draw() = 0; 
 };
