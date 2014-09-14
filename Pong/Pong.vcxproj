@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="CollisionType.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Point.h" />

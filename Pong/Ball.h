@@ -23,11 +23,15 @@ public:
     void BounceOffPaddle(int spin);
     void BounceOffPaddle(); 
     void BounceOffWall();
-    float FurthestLeftCoord();
-    float FurthestRightCoord();
-    float FurthestTopCoord();
-    float FurthestBottomCoord();
     void ResetBall(float x, float y); 
+    float X_Min();
+    float Y_Min();
+    float X_Max();
+    float Y_Max();
+    void CollideLeft();
+    void CollideRight();
+    void CollideTop();
+    void CollideBottom();
 };
 
 #endif

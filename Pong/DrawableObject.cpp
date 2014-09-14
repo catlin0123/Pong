@@ -20,3 +20,17 @@
          Color[i] = d.Color[i];
      }
  }
+
+ void DrawableObject::Collide(DrawableObject &obj)
+ {
+     bool CollideLeft = false; 
+     bool CollideRight = false;
+     bool CollideUp = false;
+     bool CollideDown = false;
+
+
+
+
+ }
+
+ CollisionType didCollide(DrawableObject &obj)

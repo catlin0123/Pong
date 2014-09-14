@@ -77,26 +77,6 @@ void Ball::BounceOffWall()
     y_vel *= -1; 
 }
 
-float Ball::FurthestLeftCoord()
-{
-    return pnt.x - radius; 
-}
-
-float Ball::FurthestRightCoord()
-{
-    return pnt.x + radius; 
-}
-
-float Ball::FurthestTopCoord()
-{
-    return pnt.y + radius;
-}
-
-float Ball::FurthestBottomCoord()
-{
-    return pnt.y - radius; 
-}
-
 void Ball::ResetBall(float x, float y)
 {
     pnt.x = x; 
@@ -110,4 +90,53 @@ void Ball::ScaleVelocity()
     float angle = atan(y_vel / x_vel);
     y_vel = velocity * cos(angle);
     x_vel = velocity * cos(angle);
+}
+
+float Ball::X_Min()
+{
+    return pnt.x - radius;
+}
+
+float Ball::Y_Min()
+{
+    return pnt.y - radius;
+}
+
+float Ball::X_Max()
+{
+    return pnt.x + radius;
+}
+
+float Ball::Y_Max()
+{
+    return pnt.y + radius;
+}
+
+void Ball::CollideLeft()
+{
+    if (x_vel < 0)
+    {
+        x_vel *= -1; 
+    }
+}
+void Ball::CollideRight()
+{
+    if (x_vel > 0)
+    {
+        x_vel *= -1; 
+    }
+}
+void Ball::CollideTop()
+{
+    if (y_vel < 0)
+    {
+        y_vel *= -1; 
+    }
+}
+void Ball::CollideBottom()
+{
+    if (y_vel > 0)
+    {
+        y_vel *= -1; 
+    }
 }
