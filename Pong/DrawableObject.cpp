@@ -1,9 +1,13 @@
 #include "DrawableObject.h"
 
- DrawableObject::DrawableObject(float x, float y, float color[])
+DrawableObject::DrawableObject()
 {
-    pnt.x = x; 
-    pnt.y = y; 
+
+}
+
+ DrawableObject::DrawableObject(Point center, float color[])
+{
+	Center = center;
     for (int i = 0; i < 3; i++)
     {
         Color[i] = color[i];
@@ -12,8 +16,7 @@
 
  DrawableObject::DrawableObject(DrawableObject &d)
  {
-     pnt.x = d.pnt.x; 
-     pnt.y = d.pnt.y; 
+	 Center = d.Center;
 
      for (int i = 0; i < 3; i++)
      {
@@ -33,4 +36,7 @@
 
  }
 
- CollisionType didCollide(DrawableObject &obj)
+ CollisionTypeEnum didCollide(DrawableObject &obj)
+ {
+	 return NO_COLLISION;
+ }

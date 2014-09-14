@@ -2,16 +2,17 @@
 #define _DrawableObject_H_
 
 #include "Point.h"
-#include "CollisionType.h"
+#include "Enums.h"
 
 class DrawableObject
 {
     protected:
-        Point pnt;
+        Point Center;
         float Color[3];
 
     public:
-        DrawableObject(float x, float y, float color[]);
+		DrawableObject();
+        DrawableObject(Point center, float color[]);
         DrawableObject(DrawableObject &d); 
         virtual void Draw() = 0; 
         virtual float X_Min() = 0; 
@@ -23,7 +24,7 @@ class DrawableObject
         virtual void CollideTop() = 0;
         virtual void CollideBottom() = 0;
         void Collide(DrawableObject &obj); 
-        CollisionType didCollide(DrawableObject &obj);
+        CollisionTypeEnum didCollide(DrawableObject &obj);
 };
 
 #endif

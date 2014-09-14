@@ -68,13 +68,15 @@
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Pong.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="CollisionType.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

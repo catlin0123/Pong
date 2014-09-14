@@ -2,17 +2,26 @@
 #include "DrawableObject.h"
 #include <gl\freeglut.h>
 
-Paddle::Paddle(Point center, int w_offset, int h_offset, float color[]) :
-    DrawableObject(center.x, center.y, color)
+Paddle::Paddle() :
+	DrawableObject()
+{
+	x_inc = 0;
+	y_inc = 0;
+	widthOffset = 0;
+	heightOffset = 0;
+}
+
+Paddle::Paddle(Point center, float width, float height, float color[]) :
+    DrawableObject(center, color)
 {
     x_inc = 0; 
     y_inc = 0; 
-    widthOffset = w_offset; 
-    heightOffset = heightOffset; 
+    widthOffset = width / 2; 
+    heightOffset = height / 2; 
 }
 
 Paddle::Paddle(Paddle &p) :
-    DrawableObject(p.pnt.x, p.pnt.y, p.Color)
+    DrawableObject(p.Center, p.Color)
 {
     x_inc = p.x_inc; 
     y_inc = p.y_inc;
@@ -24,16 +33,16 @@ void Paddle::Draw()
 {
     glColor3fv(Color);
     glBegin(GL_POLYGON); 
-        glVertex2f(pnt.x + widthOffset, pnt.y + heightOffset); 
-        glVertex2f(pnt.x + widthOffset, pnt.y - heightOffset);
-        glVertex2f(pnt.x - widthOffset, pnt.y - heightOffset);
-        glVertex2f(pnt.x - widthOffset, pnt.y + heightOffset);
+        glVertex2f(Center.X + widthOffset, Center.Y + heightOffset); 
+        glVertex2f(Center.X+ widthOffset, Center.Y - heightOffset);
+        glVertex2f(Center.X - widthOffset, Center.Y - heightOffset);
+        glVertex2f(Center.X - widthOffset, Center.Y + heightOffset);
     glEnd();
 }
 void Paddle::Update()
 {
-    pnt.x += x_inc;
-    pnt.y += y_inc; 
+    Center.X += x_inc;
+    Center.Y += y_inc; 
 }
 void Paddle::ChangeXSpeed(float inc)
 {
@@ -68,19 +77,19 @@ void Paddle::ResetSpeed()
 
 float Paddle::X_Min()
 {
-    return pnt.x - widthOffset; 
+    return Center.X - widthOffset; 
 }
 float Paddle::Y_Min()
 {
-    return pnt.y - heightOffset; 
+    return Center.Y - heightOffset; 
 }
 float Paddle::X_Max()
 {
-    return pnt.x + widthOffset; 
+    return Center.X + widthOffset; 
 }
 float Paddle::Y_Max()
 {
-    return pnt.y + heightOffset;
+    return Center.Y + heightOffset;
 }
 void Paddle::CollideLeft()
 {

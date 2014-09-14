@@ -3,8 +3,14 @@
 #include <math.h>
 #include <GL/freeglut.h>
 
+Ball::Ball() :
+	DrawableObject()
+{
+
+}
+
 Ball::Ball(Point center, int rad, float color[]) :
-    DrawableObject(center.x, center.y, color)
+    DrawableObject(center, color)
 {
     radius = rad;
     velocity = 1.0; 
@@ -13,7 +19,7 @@ Ball::Ball(Point center, int rad, float color[]) :
 }
 
 Ball::Ball(Ball &b) : 
-    DrawableObject(pnt.x, pnt.y, Color)
+    DrawableObject(b.Center, b.Color)
 {
     radius = b.radius; 
     velocity = b.velocity; 
@@ -30,16 +36,16 @@ void Ball::Draw()
     glBegin(GL_POLYGON);
         for (int i = 0; i < num_segments; i++)
         {
-            glVertex2d(pnt.x + radius * cos(2 * PI * i / num_segments),
-                pnt.y + radius * sin(2 * PI * i / num_segments)); 
+            glVertex2d(Center.X + radius * cos(2 * PI * i / num_segments),
+                Center.Y + radius * sin(2 * PI * i / num_segments)); 
         }
     glEnd(); 
 }
 
 void Ball::Update()
 {
-    pnt.x += x_vel; 
-    pnt.y += y_vel; 
+    Center.X += x_vel; 
+    Center.Y += y_vel; 
 }
 
 void Ball::IncreaseSpeed()
@@ -79,8 +85,8 @@ void Ball::BounceOffWall()
 
 void Ball::ResetBall(float x, float y)
 {
-    pnt.x = x; 
-    pnt.y = y; 
+    Center.X = x; 
+    Center.Y = y; 
     velocity = 1.0;
     ScaleVelocity(); 
 }
@@ -94,22 +100,22 @@ void Ball::ScaleVelocity()
 
 float Ball::X_Min()
 {
-    return pnt.x - radius;
+    return Center.X - radius;
 }
 
 float Ball::Y_Min()
 {
-    return pnt.y - radius;
+    return Center.Y - radius;
 }
 
 float Ball::X_Max()
 {
-    return pnt.x + radius;
+    return Center.X + radius;
 }
 
 float Ball::Y_Max()
 {
-    return pnt.y + radius;
+    return Center.Y + radius;
 }
 
 void Ball::CollideLeft()

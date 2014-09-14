@@ -13,6 +13,7 @@ private:
     void ScaleVelocity(); 
     
 public:
+	Ball();
     Ball(Point center, int rad, float color[]);
     Ball(Ball &b);
     void Draw();
