@@ -13,7 +13,7 @@ class Paddle : public DrawableObject
     
     public:
 		Paddle();
-        Paddle(Point center, float width, float height, float color[]);
+        Paddle(Point center, float width, float height, const float color[]);
         Paddle(Paddle &p);
 
         void Draw(); 
@@ -29,13 +29,7 @@ class Paddle : public DrawableObject
         float X_Min();
         float Y_Min();
         float X_Max();
-        float Y_Max();
-
-        void CollideLeft();
-        void CollideRight();
-        void CollideTop();
-        void CollideBottom();
-
+		float Y_Max();
 };
 
 #endif 

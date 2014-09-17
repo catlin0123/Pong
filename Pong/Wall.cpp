@@ -6,7 +6,7 @@ Wall::Wall() :
 
 }
 
-Wall::Wall(Point center, OrientationEnum orientation, float color[], float length) :
+Wall::Wall(Point center, OrientationEnum orientation, const float color[], float length) :
 	DrawableObject(center, color)
 {
 	Orientation = orientation;
@@ -41,24 +41,4 @@ float Wall::X_Max()
 float Wall::Y_Max()
 {
 	return Orientation == VERTICAL ? Center.Y + Length / 2 : Center.Y;
-}
-
-void Wall::CollideLeft()
-{
-
-}
-
-void Wall::CollideRight()
-{
-
-}
-
-void Wall::CollideTop()
-{
-
-}
-
-void Wall::CollideBottom()
-{
-
 }

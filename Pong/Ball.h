@@ -14,7 +14,7 @@ private:
     
 public:
 	Ball();
-    Ball(Point center, int rad, float color[]);
+    Ball(Point center, int rad, const float color[]);
     Ball(Ball &b);
     void Draw();
     void Update(); 
@@ -29,10 +29,6 @@ public:
     float Y_Min();
     float X_Max();
     float Y_Max();
-    void CollideLeft();
-    void CollideRight();
-    void CollideTop();
-    void CollideBottom();
 };
 
 #endif

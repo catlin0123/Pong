@@ -12,18 +12,13 @@ class DrawableObject
 
     public:
 		DrawableObject();
-        DrawableObject(Point center, float color[]);
+        DrawableObject(Point center, const float color[]);
         DrawableObject(DrawableObject &d); 
         virtual void Draw() = 0; 
         virtual float X_Min() = 0; 
         virtual float Y_Min() = 0; 
         virtual float X_Max() = 0; 
-        virtual float Y_Max() = 0; 
-        virtual void CollideLeft() = 0;
-        virtual void CollideRight() = 0;
-        virtual void CollideTop() = 0;
-        virtual void CollideBottom() = 0;
-        void Collide(DrawableObject &obj); 
+        virtual float Y_Max() = 0;
         CollisionTypeEnum didCollide(DrawableObject &obj);
 };
 

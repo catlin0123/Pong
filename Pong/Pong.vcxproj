@@ -65,6 +65,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Pong.cpp" />
@@ -72,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Paddle.h" />

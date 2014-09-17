@@ -5,7 +5,7 @@ DrawableObject::DrawableObject()
 
 }
 
- DrawableObject::DrawableObject(Point center, float color[])
+ DrawableObject::DrawableObject(Point center, const float color[])
 {
 	Center = center;
     for (int i = 0; i < 3; i++)
@@ -24,19 +24,7 @@ DrawableObject::DrawableObject()
      }
  }
 
- void DrawableObject::Collide(DrawableObject &obj)
- {
-     bool CollideLeft = false; 
-     bool CollideRight = false;
-     bool CollideUp = false;
-     bool CollideDown = false;
-
-
-
-
- }
-
- CollisionTypeEnum didCollide(DrawableObject &obj)
+ CollisionTypeEnum DrawableObject::didCollide(DrawableObject &obj)
  {
 	 return NO_COLLISION;
  }

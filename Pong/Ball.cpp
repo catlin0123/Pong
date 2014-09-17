@@ -9,7 +9,7 @@ Ball::Ball() :
 
 }
 
-Ball::Ball(Point center, int rad, float color[]) :
+Ball::Ball(Point center, int rad, const float color[]) :
     DrawableObject(center, color)
 {
     radius = rad;
@@ -116,33 +116,4 @@ float Ball::X_Max()
 float Ball::Y_Max()
 {
     return Center.Y + radius;
-}
-
-void Ball::CollideLeft()
-{
-    if (x_vel < 0)
-    {
-        x_vel *= -1; 
-    }
-}
-void Ball::CollideRight()
-{
-    if (x_vel > 0)
-    {
-        x_vel *= -1; 
-    }
-}
-void Ball::CollideTop()
-{
-    if (y_vel < 0)
-    {
-        y_vel *= -1; 
-    }
-}
-void Ball::CollideBottom()
-{
-    if (y_vel > 0)
-    {
-        y_vel *= -1; 
-    }
 }

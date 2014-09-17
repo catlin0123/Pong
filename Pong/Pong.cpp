@@ -16,6 +16,7 @@ void animate(int frame);
 
 //constants
 const unsigned char ESCAPE_KEY = 27;
+const float WHITE[3] = { 1.0, 1.0, 1.0 };
 
 //globals
 int ScreenWidth = 600; 
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 {
     //set up the window
     glutInit(&argc, argv); 
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
     glutInitWindowSize(ScreenWidth, ScreenHeight);
     glutInitWindowPosition(100, 100); 
     glutCreateWindow("Pong"); 
@@ -50,9 +51,10 @@ int main(int argc, char *argv[])
     glutSpecialFunc(special_keys);
     glutSpecialUpFunc(special_keys_up);
 
-    glutTimerFunc(30, animate, 1);
+    //glutTimerFunc(30, animate, 1);
 
     //TODO set up players and ball
+	ball = Ball(Point(ScreenWidth / 2, ScreenHeight / 2), 10, WHITE);
 
     glutMainLoop(); 
 
@@ -62,6 +64,8 @@ int main(int argc, char *argv[])
 
 void display(void)
 {
+	glClear(GL_COLOR_BUFFER_BIT);
+
     ball.Draw();
     left_player.Draw();
     right_player.Draw();
@@ -69,9 +73,8 @@ void display(void)
     if (Paused)
     {
         //TODO Display pause message
-    }
+    }	
 
-    glutSwapBuffers();
     glFlush();
 }
 
@@ -80,6 +83,9 @@ void reshape(int w, int h)
     ScreenWidth = w;
     ScreenHeight = h;
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, 100, 0, 100);
     glViewport(0, 0, w, h);
 }
 

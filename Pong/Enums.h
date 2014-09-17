@@ -1,3 +1,5 @@
+#pragma once
+
 enum CollisionTypeEnum
 {
     NO_COLLISION = 0, 

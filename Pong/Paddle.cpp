@@ -11,7 +11,7 @@ Paddle::Paddle() :
 	heightOffset = 0;
 }
 
-Paddle::Paddle(Point center, float width, float height, float color[]) :
+Paddle::Paddle(Point center, float width, float height, const float color[]) :
     DrawableObject(center, color)
 {
     x_inc = 0; 
@@ -90,21 +90,5 @@ float Paddle::X_Max()
 float Paddle::Y_Max()
 {
     return Center.Y + heightOffset;
-}
-void Paddle::CollideLeft()
-{
-
-}
-void Paddle::CollideRight()
-{
-
-}
-void Paddle::CollideTop()
-{
-
-}
-void Paddle::CollideBottom()
-{
-
 }
 
