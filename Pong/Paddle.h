@@ -30,6 +30,11 @@ class Paddle : public DrawableObject
         float Y_Min();
         float X_Max();
 		float Y_Max();
+
+        float X_Vel();
+        float Y_Vel();
+
+        int Score = 0;
 };
 
 #endif 

@@ -67,6 +67,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
+    <ClCompile Include="Net.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Pong.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="Net.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Wall.h" />

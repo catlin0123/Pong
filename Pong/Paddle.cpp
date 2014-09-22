@@ -34,7 +34,7 @@ void Paddle::Draw()
     glColor3fv(Color);
     glBegin(GL_POLYGON); 
         glVertex2f(Center.X + widthOffset, Center.Y + heightOffset); 
-        glVertex2f(Center.X+ widthOffset, Center.Y - heightOffset);
+        glVertex2f(Center.X + widthOffset, Center.Y - heightOffset);
         glVertex2f(Center.X - widthOffset, Center.Y - heightOffset);
         glVertex2f(Center.X - widthOffset, Center.Y + heightOffset);
     glEnd();
@@ -46,19 +46,25 @@ void Paddle::Update()
 }
 void Paddle::ChangeXSpeed(float inc)
 {
-    x_inc += inc; 
-    if (x_inc > -1 && x_inc < 1)
+    if (x_inc < widthOffset - 1  && x_inc > -1 * widthOffset + 1)
+    {
+        x_inc += inc;
+    }
+    /*if (x_inc > -1 && x_inc < 1)
     {
         ResetXSpeed();
-    }
+    }*/
 }
 void Paddle::ChangeYSpeed(float inc)
 {
-    y_inc += inc; 
-    if (y_inc > -1 && y_inc < 1)
+    if (y_inc < heightOffset - 2 && y_inc > -1 * heightOffset + 1)
+    {
+        y_inc += inc;
+    }
+    /*if (y_inc > -1 && y_inc < 1)
     {
         ResetYSpeed(); 
-    }
+    }*/
 }
 void Paddle::ResetXSpeed()
 {
@@ -90,5 +96,15 @@ float Paddle::X_Max()
 float Paddle::Y_Max()
 {
     return Center.Y + heightOffset;
+}
+
+float Paddle::X_Vel()
+{
+    return x_inc;
+}
+
+float Paddle::Y_Vel()
+{
+    return y_inc;
 }
 

@@ -22,8 +22,8 @@ public:
     void DecreaseSpeed(); 
     void BounceOffPaddle(float change);
     void BounceOffPaddle(int spin);
-    void BounceOffPaddle(); 
-    void BounceOffWall();
+    void BounceOffPaddle(CollisionTypeEnum col); 
+    void BounceOffWall(CollisionTypeEnum col);
     void ResetBall(float x, float y); 
     float X_Min();
     float Y_Min();

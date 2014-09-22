@@ -1,4 +1,5 @@
 #include "Wall.h"
+#include <GL/freeglut.h>
 
 Wall::Wall() :
 	DrawableObject()
@@ -20,7 +21,12 @@ Wall::~Wall()
 
 void Wall::Draw()
 {
+    glColor3fv(Color);
 
+    glBegin(GL_LINES);
+        glVertex2d(X_Min(), Y_Min());
+        glVertex2d(X_Max(), Y_Max());
+    glEnd();
 }
 
 float Wall::X_Min()

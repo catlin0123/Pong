@@ -15,7 +15,7 @@ Ball::Ball(Point center, int rad, const float color[]) :
     radius = rad;
     velocity = 1.0; 
     x_vel = 1.0;
-    y_vel = 0.0; 
+    y_vel = 1.0; 
 }
 
 Ball::Ball(Ball &b) : 
@@ -63,9 +63,36 @@ void Ball::DecreaseSpeed()
     }
 }
 
-void Ball::BounceOffPaddle()
+void Ball::BounceOffPaddle(CollisionTypeEnum col)
 {
-    x_vel *= -1; 
+    if ((col & LEFT_COLLISION) == LEFT_COLLISION)
+    {
+        if (x_vel < 0)
+        {
+            x_vel *= -1;
+        }
+    }
+    if ((col & RIGHT_COLLISION) == RIGHT_COLLISION)
+    {
+        if (x_vel > 0)
+        {
+            x_vel *= -1;
+        }
+    }
+    if ((col & TOP_COLLISION) == TOP_COLLISION)
+    {
+        if (y_vel > 0)
+        {
+            y_vel *= -1;
+        }
+    }
+    if ((col & BOTTOM_COLLISION) == BOTTOM_COLLISION)
+    {
+        if (y_vel < 0)
+        {
+            y_vel *= -1;
+        }
+    }
 }
 
 void Ball::BounceOffPaddle(float change)
@@ -78,9 +105,36 @@ void Ball::BounceOffPaddle(int spin)
     throw ERROR_CALL_NOT_IMPLEMENTED;
 }
 
-void Ball::BounceOffWall()
+void Ball::BounceOffWall(CollisionTypeEnum col)
 {
-    y_vel *= -1; 
+    if ((col & LEFT_COLLISION) == LEFT_COLLISION)
+    {
+        if (x_vel < 0)
+        {
+            x_vel *= -1;
+        }
+    }
+    if ((col & RIGHT_COLLISION) == RIGHT_COLLISION)
+    {
+        if (x_vel > 0)
+        {
+            x_vel *= -1;
+        }
+    }
+    if ((col & TOP_COLLISION) == TOP_COLLISION)
+    {
+        if (y_vel > 0)
+        {
+            y_vel *= -1; 
+        }
+    }
+    if ((col & BOTTOM_COLLISION) == BOTTOM_COLLISION)
+    {
+        if (y_vel < 0)
+        {
+            y_vel *= -1; 
+        }
+    }
 }
 
 void Ball::ResetBall(float x, float y)
