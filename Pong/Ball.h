@@ -10,14 +10,14 @@ private:
     float velocity; 
     float x_vel; 
     float y_vel; 
-    void ScaleVelocity(); 
+    void ScaleVelocity(float inc); 
     
 public:
 	Ball();
     Ball(Point center, int rad, const float color[]);
     Ball(Ball &b);
     void Draw();
-    void Update(); 
+    void Update();
     void IncreaseSpeed();
     void DecreaseSpeed(); 
     void BounceOffPaddle(float change);

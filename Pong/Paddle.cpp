@@ -31,7 +31,7 @@ Paddle::Paddle(Paddle &p) :
 
 void Paddle::Draw()
 {
-    glColor3fv(Color);
+    glColor4fv(Color);
     glBegin(GL_POLYGON); 
         glVertex2f(Center.X + widthOffset, Center.Y + heightOffset); 
         glVertex2f(Center.X + widthOffset, Center.Y - heightOffset);

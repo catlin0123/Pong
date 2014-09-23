@@ -50,16 +50,17 @@ void Ball::Update()
 
 void Ball::IncreaseSpeed()
 {
-    velocity += 1; 
-    ScaleVelocity(); 
+	if (velocity < radius / 2)
+	{
+		ScaleVelocity(0.5);
+	}
 }
 
 void Ball::DecreaseSpeed()
 {
     if (velocity > 1)
     {
-        velocity -= 1; 
-        ScaleVelocity();
+        ScaleVelocity(-0.5);
     }
 }
 
@@ -141,15 +142,16 @@ void Ball::ResetBall(float x, float y)
 {
     Center.X = x; 
     Center.Y = y; 
-    velocity = 1.0;
-    ScaleVelocity(); 
+    x_vel *= -1;
 }
 
-void Ball::ScaleVelocity()
+void Ball::ScaleVelocity(float inc)
 {
-    float angle = atan(y_vel / x_vel);
-    y_vel = velocity * cos(angle);
-    x_vel = velocity * cos(angle);
+    float yangle = asin(y_vel / velocity);
+	float xangle = acos(x_vel / velocity);
+	velocity += inc; 
+    y_vel = velocity * sin(yangle);
+    x_vel = velocity * cos(xangle);
 }
 
 float Ball::X_Min()

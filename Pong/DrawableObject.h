@@ -8,7 +8,7 @@ class DrawableObject
 {
     protected:
         Point Center;
-        float Color[3];
+        float Color[4];
 
     public:
 		DrawableObject();

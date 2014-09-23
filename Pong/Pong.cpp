@@ -1,6 +1,8 @@
 //includes
 #include <gl\freeglut.h>
 #include <gl\GLU.h>
+#include <string>
+
 #include "Paddle.h"
 #include "Ball.h"
 #include "DrawableObject.h"
@@ -25,7 +27,7 @@ void RightCollideWithWall(CollisionTypeEnum col);
 
 //constants
 const unsigned char ESCAPE_KEY = 27;
-const float WHITE[3] = { 1.0, 1.0, 1.0 };
+const float WHITE[4] = { 1.0, 1.0, 1.0, 1.0 };
 
 //globals
 int ScreenWidth = 600; 
@@ -60,7 +62,9 @@ int main(int argc, char *argv[])
     glutInitWindowSize(ScreenWidth, ScreenHeight);
     glutInitWindowPosition(100, 100); 
     glutCreateWindow("Pong"); 
-    glClearColor(0.0, 0.0, 0.0, 1.0); 
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     //specify callbacks
     glutDisplayFunc(display);
@@ -73,7 +77,7 @@ int main(int argc, char *argv[])
     glutTimerFunc(30, animate, 1);
 
     //TODO set up players and ball
-	ball = Ball(Point(50, 50),5, WHITE);
+	ball = Ball(Point(100, 50),5, WHITE);
 
     left_player = Paddle(Point(10, 50), 10, 40, WHITE);
     right_player = Paddle(Point(190, 50), 10, 40, WHITE);
@@ -110,6 +114,8 @@ int main(int argc, char *argv[])
 
 void display(void) 
 {
+	int length;
+	
 	glClear(GL_COLOR_BUFFER_BIT);
     
     ball.Draw();
@@ -121,9 +127,30 @@ void display(void)
     bottom_wall.Draw();
     net.Draw();
 
+	string right_score = to_string(right_player.Score);
+	string left_score = to_string(left_player.Score);
+
+
+	glColor4fv(WHITE);
+
+	length = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)left_score.c_str());
+	glRasterPos2i(50 - (200.0 / ScreenWidth * length / 2.0), 90);
+	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)left_score.c_str());
+
+	length = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)right_score.c_str());
+	glRasterPos2i(150 - (200.0 / ScreenWidth * length / 2.0), 90);
+	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)right_score.c_str());
+
     if (Paused)
     {
-        //TODO Display pause message
+		float alphaBlack[4] = { 0.0, 0.0, 0.0, .60 };
+		Paddle temp = Paddle(Point(100, 50), 200, 100, alphaBlack);
+		temp.Draw();
+
+		glColor4fv(WHITE);
+		length = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"Paused");
+		glRasterPos2i(100 - (200.0/ScreenWidth * length / 2.0), 50);
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"Paused");
     }	
 
     //glFlush();
@@ -145,40 +172,48 @@ void keyboard(unsigned char key, int x, int y)
 {
     Keystate[key] = true;
 
-    if (Keystate['w'] || Keystate['W'])
+    if ((Keystate['w'] || Keystate['W']) && !Paused)
     {
         left_player.ChangeYSpeed(PaddleInc);
     }
 
-    if (Keystate['a'] || Keystate['A'])
+	if ((Keystate['a'] || Keystate['A']) && !Paused)
     {
         left_player.ChangeXSpeed((-1)*PaddleInc);
     }
 
-    if (Keystate['s'] || Keystate['S'])
+	if ((Keystate['s'] || Keystate['S']) && !Paused)
     {
         left_player.ChangeYSpeed(-1 * PaddleInc);
     }
 
-    if (Keystate['d'] || Keystate['D'])
+	if ((Keystate['d'] || Keystate['D']) && !Paused)
     {
         left_player.ChangeXSpeed(PaddleInc); 
     }
 
-    if (Keystate['+'])
+	if (Keystate['+'] && !Paused)
     {
         ball.IncreaseSpeed();
     }
 
-    if (Keystate['-'])
+	if (Keystate['-'] && !Paused)
     {
         ball.DecreaseSpeed();
     }
 
     if (Keystate[' '])
     {
-        //Paused = !Paused;
-        //TODO Change paddle colors?
+        Paused = !Paused;
+
+		if (Paused)
+		{
+			glutPostRedisplay();
+		}
+		else
+		{
+			glutTimerFunc(30, animate, 0);
+		}
     }
 
     if (Keystate[ESCAPE_KEY])
@@ -196,22 +231,22 @@ void special_keys(int key, int x, int y)
 {
     SpecKeystate[key] = true;
 
-    if (SpecKeystate[GLUT_KEY_LEFT])
+    if (SpecKeystate[GLUT_KEY_LEFT] && !Paused)
     {
         right_player.ChangeXSpeed(-1 * PaddleInc);
     }
 
-    if (SpecKeystate[GLUT_KEY_RIGHT])
+	if (SpecKeystate[GLUT_KEY_RIGHT] && !Paused)
     {
         right_player.ChangeXSpeed(PaddleInc);
     }
 
-    if (SpecKeystate[GLUT_KEY_UP])
+	if (SpecKeystate[GLUT_KEY_UP] && !Paused)
     {
         right_player.ChangeYSpeed(PaddleInc);
     }
 
-    if (SpecKeystate[GLUT_KEY_DOWN])
+	if (SpecKeystate[GLUT_KEY_DOWN] && !Paused)
     {
         right_player.ChangeYSpeed(-1 * PaddleInc);
     }
@@ -249,14 +284,22 @@ void BallCollideWithWall(CollisionTypeEnum col)
 
 void Score(CollisionTypeEnum col)
 {
-    if (LEFT_COLLISION)
+    if (col == LEFT_COLLISION)
     {
         right_player.Score++;
     }
-    if (RIGHT_COLLISION)
+    if (col == RIGHT_COLLISION)
     {
         left_player.Score++;
     }
+
+	if (left_player.Score == 10 || right_player.Score == 10)
+	{
+		left_player.Score = 0;
+		right_player.Score = 0;
+
+		Paused = true;
+	}
 
     ball.ResetBall(100, 50);
 }

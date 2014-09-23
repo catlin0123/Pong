@@ -8,7 +8,7 @@ DrawableObject::DrawableObject()
  DrawableObject::DrawableObject(Point center, const float color[])
 {
 	Center = center;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
         Color[i] = color[i];
     }
@@ -18,7 +18,7 @@ DrawableObject::DrawableObject()
  {
 	 Center = d.Center;
 
-     for (int i = 0; i < 3; i++)
+     for (int i = 0; i < 4; i++)
      {
          Color[i] = d.Color[i];
      }
@@ -58,30 +58,26 @@ DrawableObject::DrawableObject()
          top_collision = ((*this).Y_Max() > obj.Y_Min()) && (x1 < obj.X_Max()) && (x1 > obj.X_Min());
      }
 
-     /*float x_min, x_max, y_min, y_max;
-     x_min = (*this).X_Min();
-     x_max = (*this).X_Max();
-     y_min = (*this).Y_Min();
-     y_max = (*this).Y_Max();
-
-     left_collision = x_min < obj.X_Max() && y1 > obj.Y_Min() && y1 < obj.Y_Max();*/
-
      CollisionTypeEnum collision = NO_COLLISION; 
      if (left_collision)
      {
          collision = CollisionTypeEnum(collision | LEFT_COLLISION); 
+		 (*this).Center.X = obj.X_Max() + ((*this).X_Max() - (*this).Center.X);
      }
      if (right_collision)
      {
          collision = CollisionTypeEnum(collision | RIGHT_COLLISION);
+		 (*this).Center.X = obj.X_Min() - ((*this).X_Max() - (*this).Center.X);
      }
      if (top_collision)
      {
          collision = CollisionTypeEnum(collision | TOP_COLLISION);
+		 (*this).Center.Y = obj.Y_Min() - ((*this).Y_Max() - (*this).Center.Y);
      }
      if (bottom_collision)
      {
-         collision = CollisionTypeEnum(collision | BOTTOM_COLLISION); 
+         collision = CollisionTypeEnum(collision | BOTTOM_COLLISION);
+		 (*this).Center.Y = obj.Y_Max() + ((*this).Y_Max() - (*this).Center.Y);
      }
 	 return collision;
  }
