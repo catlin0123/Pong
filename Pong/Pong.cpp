@@ -166,7 +166,11 @@ void reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0, 200, 0, 100);
-    glViewport(0, 0, w, h);
+
+    if (float(w) / h > 2)
+        glViewport((w - 2 * h) / 2, 0, 2 * h, h);
+    else
+        glViewport(0, (h - w / 2) / 2, w, w / 2);
 }
 
 void keyboard(unsigned char key, int x, int y)
