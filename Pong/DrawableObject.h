@@ -7,10 +7,10 @@
 class DrawableObject
 {
     protected:
-        Point Center;
         float Color[4];
 
     public:
+        Point Center;
 		DrawableObject();
         DrawableObject(Point center, const float color[]);
         DrawableObject(DrawableObject &d); 

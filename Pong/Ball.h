@@ -20,7 +20,7 @@ public:
     void Update();
     void IncreaseSpeed();
     void DecreaseSpeed(); 
-    void BounceOffPaddle(float change);
+    void BounceOffPaddle(float ratio);
     void BounceOffPaddle(int spin);
     void BounceOffPaddle(CollisionTypeEnum col); 
     void BounceOffWall(CollisionTypeEnum col);

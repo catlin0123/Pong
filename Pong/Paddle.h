@@ -8,6 +8,7 @@ class Paddle : public DrawableObject
     private:
         float widthOffset; 
         float heightOffset;
+        float originalHeight; 
         float x_inc; 
         float y_inc; 
     
@@ -35,6 +36,9 @@ class Paddle : public DrawableObject
         float Y_Vel();
 
         int Score = 0;
+
+        void ReduceSize(); 
+        void ResetSize(); 
 };
 
 #endif 

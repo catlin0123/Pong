@@ -20,7 +20,8 @@ void special_keys(int key, int x, int y);
 void special_keys_up(int key, int x, int y);
 void animate(int frame);
 void BallCollideWithWall(CollisionTypeEnum col);
-void BallCollideWithPaddle(CollisionTypeEnum col);
+void BallCollideWithLeftPaddle(CollisionTypeEnum col);
+void BallCollideWithRightPaddle(CollisionTypeEnum col);
 void Score(CollisionTypeEnum col);
 void LeftCollideWithWall(CollisionTypeEnum col);
 void RightCollideWithWall(CollisionTypeEnum col);
@@ -89,8 +90,8 @@ int main(int argc, char *argv[])
     left_wall = Wall(Point(1, 50), VERTICAL, WHITE, 98);
     right_wall = Wall(Point(199, 50), VERTICAL, WHITE, 98);
 
-    collision_man.RegisterCollision(&ball, &left_player, BallCollideWithPaddle);
-    collision_man.RegisterCollision(&ball, &right_player, BallCollideWithPaddle);
+    collision_man.RegisterCollision(&ball, &left_player, BallCollideWithLeftPaddle);
+    collision_man.RegisterCollision(&ball, &right_player, BallCollideWithRightPaddle);
     collision_man.RegisterCollision(&ball, &top_wall, BallCollideWithWall); 
     collision_man.RegisterCollision(&ball, &bottom_wall, BallCollideWithWall);
     collision_man.RegisterCollision(&ball, &left_wall, Score);
@@ -272,9 +273,24 @@ void animate(int frame)
     glutPostRedisplay();
 }
 
-void BallCollideWithPaddle(CollisionTypeEnum col)
+void BallCollideWithLeftPaddle(CollisionTypeEnum col)
 {
     ball.BounceOffPaddle(col); 
+    float ratio = ((left_player.Center.Y - ball.Center.Y) / (left_player.Center.Y - left_player.Y_Max()));
+    ball.BounceOffPaddle(ratio); 
+
+    left_player.ReduceSize();
+    right_player.ReduceSize(); 
+}
+
+void BallCollideWithRightPaddle(CollisionTypeEnum col)
+{
+    ball.BounceOffPaddle(col);
+    float ratio = ((right_player.Center.Y - ball.Center.Y) / (right_player.Center.Y - right_player.Y_Max()));
+    ball.BounceOffPaddle(ratio);
+    
+    left_player.ReduceSize();
+    right_player.ReduceSize();
 }
 
 void BallCollideWithWall(CollisionTypeEnum col)
@@ -301,6 +317,8 @@ void Score(CollisionTypeEnum col)
 		Paused = true;
 	}
 
+    left_player.ResetSize(); 
+    right_player.ResetSize(); 
     ball.ResetBall(100, 50);
 }
 

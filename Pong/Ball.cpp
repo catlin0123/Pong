@@ -14,8 +14,8 @@ Ball::Ball(Point center, int rad, const float color[]) :
 {
     radius = rad;
     velocity = 1.0; 
-    x_vel = 1.0;
-    y_vel = 1.0; 
+    x_vel = sqrt(2.0)/2;
+    y_vel = sqrt(2.0)/2; 
 }
 
 Ball::Ball(Ball &b) : 
@@ -96,9 +96,26 @@ void Ball::BounceOffPaddle(CollisionTypeEnum col)
     }
 }
 
-void Ball::BounceOffPaddle(float change)
+void Ball::BounceOffPaddle(float ratio)
 {
-    throw ERROR_CALL_NOT_IMPLEMENTED; 
+    if (ratio < 0)
+    {
+        ratio *= -1; 
+    }
+    const double PI = 3.14159265358979323846;
+    bool x_is_neg = x_vel < 0;
+    bool y_is_neg = y_vel < 0; 
+    float radians = ratio *  PI / 4; 
+    x_vel = velocity * cos(radians); 
+    y_vel = velocity * sin(radians);
+    if ((x_is_neg && x_vel > 0) || (!x_is_neg && x_vel < 0))
+    {
+        x_vel *= -1; 
+    }
+    if ((y_is_neg && y_vel > 0) || (!y_is_neg && y_vel < 0))
+    {
+        y_vel *= -1;
+    }
 }
 
 void Ball::BounceOffPaddle(int spin)

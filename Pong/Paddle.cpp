@@ -9,6 +9,7 @@ Paddle::Paddle() :
 	y_inc = 0;
 	widthOffset = 0;
 	heightOffset = 0;
+    originalHeight = 0; 
 }
 
 Paddle::Paddle(Point center, float width, float height, const float color[]) :
@@ -18,6 +19,7 @@ Paddle::Paddle(Point center, float width, float height, const float color[]) :
     y_inc = 0; 
     widthOffset = width / 2; 
     heightOffset = height / 2; 
+    originalHeight = height / 2; 
 }
 
 Paddle::Paddle(Paddle &p) :
@@ -27,6 +29,7 @@ Paddle::Paddle(Paddle &p) :
     y_inc = p.y_inc;
     widthOffset = p.widthOffset; 
     heightOffset = p.heightOffset; 
+    originalHeight = p.originalHeight; 
 }
 
 void Paddle::Draw()
@@ -106,5 +109,18 @@ float Paddle::X_Vel()
 float Paddle::Y_Vel()
 {
     return y_inc;
+}
+
+void Paddle::ReduceSize()
+{
+    if (heightOffset > widthOffset)
+    {
+        heightOffset -= .5;
+    }
+}
+
+void Paddle::ResetSize()
+{
+    heightOffset = originalHeight; 
 }
 
