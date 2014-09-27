@@ -7,7 +7,8 @@ class Ball : public DrawableObject
 {
 private:
     int radius; 
-    float velocity; 
+    float velocity;
+	float min_velocity;
     float x_vel; 
     float y_vel; 
     void ScaleVelocity(float inc); 
@@ -18,8 +19,10 @@ public:
     Ball(Ball &b);
     void Draw();
     void Update();
-    void IncreaseSpeed();
-    void DecreaseSpeed(); 
+	void IncreaseMinVelocity();
+	void DecreaseMinVelocity();
+    void IncreaseSpeed(float value = 0.5);
+    void DecreaseSpeed(float value = 0.5); 
     void BounceOffPaddle(float ratio);
     void BounceOffPaddle(int spin);
     void BounceOffPaddle(CollisionTypeEnum col); 
@@ -29,6 +32,8 @@ public:
     float Y_Min();
     float X_Max();
     float Y_Max();
+
+	float Velocity();
 };
 
 #endif

@@ -25,6 +25,7 @@ void BallCollideWithRightPaddle(CollisionTypeEnum col);
 void Score(CollisionTypeEnum col);
 void LeftCollideWithWall(CollisionTypeEnum col);
 void RightCollideWithWall(CollisionTypeEnum col);
+void UpdatePaddles();
 
 //constants
 const unsigned char ESCAPE_KEY = 27;
@@ -43,7 +44,8 @@ Ball ball;
 Paddle left_player;
 Paddle right_player;
 
-CollisionManager collision_man; 
+CollisionManager collision_man;
+string LastPaddleCollision;
 
 Net net;
 
@@ -53,6 +55,7 @@ Wall top_wall;
 Wall bottom_wall; 
 
 const float PaddleInc = .5;
+const float PaddleDec = 3 * PaddleInc;
 
 
 int main(int argc, char *argv[])
@@ -175,36 +178,36 @@ void reshape(int w, int h)
 
 void keyboard(unsigned char key, int x, int y)
 {
-    Keystate[key] = true;
+	Keystate[key] = true;
 
-    if ((Keystate['w'] || Keystate['W']) && !Paused)
-    {
-        left_player.ChangeYSpeed(PaddleInc);
-    }
+	if ((Keystate['w'] || Keystate['W']) && !Paused)
+	{
+		left_player.ChangeYSpeed(PaddleInc);
+	}
 
 	if ((Keystate['a'] || Keystate['A']) && !Paused)
-    {
-        left_player.ChangeXSpeed((-1)*PaddleInc);
-    }
+	{
+		left_player.ChangeXSpeed((-1)*PaddleInc);
+	}
 
 	if ((Keystate['s'] || Keystate['S']) && !Paused)
-    {
-        left_player.ChangeYSpeed(-1 * PaddleInc);
-    }
+	{
+		left_player.ChangeYSpeed(-1 * PaddleInc);
+	}
 
 	if ((Keystate['d'] || Keystate['D']) && !Paused)
-    {
-        left_player.ChangeXSpeed(PaddleInc); 
-    }
+	{
+		left_player.ChangeXSpeed(PaddleInc);
+	}
 
 	if (Keystate['+'] && !Paused)
     {
-        ball.IncreaseSpeed();
+        ball.IncreaseMinVelocity();
     }
 
 	if (Keystate['-'] && !Paused)
     {
-        ball.DecreaseSpeed();
+        ball.DecreaseMinVelocity();
     }
 
     if (Keystate[' '])
@@ -234,27 +237,27 @@ void keyboard_up(unsigned char key, int x, int y)
 
 void special_keys(int key, int x, int y)
 {
-    SpecKeystate[key] = true;
+	SpecKeystate[key] = true;
 
-    if (SpecKeystate[GLUT_KEY_LEFT] && !Paused)
-    {
-        right_player.ChangeXSpeed(-1 * PaddleInc);
-    }
+	if (SpecKeystate[GLUT_KEY_LEFT] && !Paused)
+	{
+		right_player.ChangeXSpeed(-1 * PaddleInc);
+	}
 
 	if (SpecKeystate[GLUT_KEY_RIGHT] && !Paused)
-    {
-        right_player.ChangeXSpeed(PaddleInc);
-    }
+	{
+		right_player.ChangeXSpeed(PaddleInc);
+	}
 
 	if (SpecKeystate[GLUT_KEY_UP] && !Paused)
-    {
-        right_player.ChangeYSpeed(PaddleInc);
-    }
+	{
+		right_player.ChangeYSpeed(PaddleInc);
+	}
 
 	if (SpecKeystate[GLUT_KEY_DOWN] && !Paused)
-    {
-        right_player.ChangeYSpeed(-1 * PaddleInc);
-    }
+	{
+		right_player.ChangeYSpeed(-1 * PaddleInc);
+	}
 }
 
 void special_keys_up(int key, int x, int y)
@@ -266,6 +269,11 @@ void animate(int frame)
 {
     if (!Paused)
     {
+		if (frame % 10 == 0)
+		{
+			UpdatePaddles();
+		}
+
         collision_man.CheckAndExecuteCollisions();
         left_player.Update();
         right_player.Update();
@@ -281,20 +289,54 @@ void BallCollideWithLeftPaddle(CollisionTypeEnum col)
 {
     ball.BounceOffPaddle(col); 
     float ratio = ((left_player.Center.Y - ball.Center.Y) / (left_player.Center.Y - left_player.Y_Max()));
-    ball.BounceOffPaddle(ratio); 
+    ball.BounceOffPaddle(ratio);
 
-    left_player.ReduceSize();
-    right_player.ReduceSize(); 
+	if (left_player.X_Vel() > 0)
+	{
+		if (left_player.Velocity() > ball.Velocity())
+		{
+			ball.IncreaseSpeed((left_player.Velocity() - ball.Velocity()) / 3);
+		}
+		else
+		{
+			ball.DecreaseSpeed(-1 * (left_player.Velocity() - ball.Velocity()) / 3);
+		}
+	}
+
+	if (LastPaddleCollision != "Left")
+	{
+		left_player.ReduceSize();
+		right_player.ReduceSize();
+	}
+
+	LastPaddleCollision = "Left";
 }
 
 void BallCollideWithRightPaddle(CollisionTypeEnum col)
 {
     ball.BounceOffPaddle(col);
     float ratio = ((right_player.Center.Y - ball.Center.Y) / (right_player.Center.Y - right_player.Y_Max()));
-    ball.BounceOffPaddle(ratio);
+	ball.BounceOffPaddle(ratio);
+
+	if (right_player.X_Vel() < 0)
+	{
+		if (right_player.Velocity() > ball.Velocity())
+		{
+			ball.IncreaseSpeed((right_player.Velocity() - ball.Velocity()) / 3);
+		}
+		else
+		{
+			ball.DecreaseSpeed(-1 * (right_player.Velocity() - ball.Velocity()) / 3);
+		}
+	}
     
-    left_player.ReduceSize();
-    right_player.ReduceSize();
+	if (LastPaddleCollision != "Right")
+	{
+		left_player.ReduceSize();
+		right_player.ReduceSize();
+	}
+
+	LastPaddleCollision = "Right";
 }
 
 void BallCollideWithWall(CollisionTypeEnum col)
@@ -321,7 +363,7 @@ void Score(CollisionTypeEnum col)
 		Paused = true;
 	}
 
-    left_player.ResetSize(); 
+    left_player.ResetSize();
     right_player.ResetSize(); 
     ball.ResetBall(100, 50);
 }
@@ -388,4 +430,142 @@ void RightCollideWithWall(CollisionTypeEnum col)
             right_player.ResetYSpeed();
         }
     }
+}
+
+void UpdatePaddles()
+{
+	if ((Keystate['w'] || Keystate['W']) && !Paused)
+	{
+		left_player.ChangeYSpeed(PaddleInc);
+	}
+	else if (left_player.Y_Vel() > 0)
+	{
+		if (left_player.Y_Vel() < PaddleDec)
+		{
+			left_player.ResetYSpeed();
+		}
+		else
+		{
+			left_player.ChangeYSpeed(-1 * PaddleDec);
+		}
+	}
+
+	if ((Keystate['a'] || Keystate['A']) && !Paused)
+	{
+		left_player.ChangeXSpeed((-1)*PaddleInc);
+	}
+	else if (left_player.X_Vel() < 0)
+	{
+		if (left_player.X_Vel() > -1 * PaddleDec)
+		{
+
+			left_player.ResetXSpeed();
+		}
+		else
+		{
+			left_player.ChangeXSpeed(PaddleDec);
+		}
+	}
+
+	if ((Keystate['s'] || Keystate['S']) && !Paused)
+	{
+		left_player.ChangeYSpeed(-1 * PaddleInc);
+	}
+	else if (left_player.Y_Vel() < 0)
+	{
+		if (left_player.Y_Vel() >  -1 * PaddleDec)
+		{
+
+			left_player.ResetYSpeed();
+		}
+		else
+		{
+			left_player.ChangeYSpeed(PaddleDec);
+		}
+	}
+
+	if ((Keystate['d'] || Keystate['D']) && !Paused)
+	{
+		left_player.ChangeXSpeed(PaddleInc);
+	}
+	else if (left_player.X_Vel() > 0)
+	{
+		if (left_player.X_Vel() < PaddleDec)
+		{
+
+			left_player.ResetXSpeed();
+		}
+		else
+		{
+			left_player.ChangeXSpeed(-1 * PaddleDec);
+		}
+	}
+
+	if (SpecKeystate[GLUT_KEY_LEFT] && !Paused)
+	{
+		right_player.ChangeXSpeed(-1 * PaddleInc);
+	}
+	else if (right_player.X_Vel() < 0)
+	{
+		if (right_player.X_Vel() > -1 * PaddleDec)
+		{
+
+			right_player.ResetXSpeed();
+		}
+		else
+		{
+			right_player.ChangeXSpeed(PaddleDec);
+		}
+	}
+
+	if (SpecKeystate[GLUT_KEY_RIGHT] && !Paused)
+	{
+		right_player.ChangeXSpeed(PaddleInc);
+	}
+	else if (right_player.X_Vel() > 0)
+	{
+		if (right_player.X_Vel() < PaddleDec)
+		{
+
+			right_player.ResetXSpeed();
+		}
+		else
+		{
+			right_player.ChangeXSpeed(-1 * PaddleDec);
+		}
+	}
+
+	if (SpecKeystate[GLUT_KEY_UP] && !Paused)
+	{
+		right_player.ChangeYSpeed(PaddleInc);
+	}
+	else if (right_player.Y_Vel() > 0)
+	{
+		if (right_player.Y_Vel() < PaddleDec)
+		{
+
+			right_player.ResetYSpeed();
+		}
+		else
+		{
+			right_player.ChangeYSpeed(-1 * PaddleDec);
+		}
+	}
+
+	if (SpecKeystate[GLUT_KEY_DOWN] && !Paused)
+	{
+		right_player.ChangeYSpeed(-1 * PaddleInc);
+	}
+	else if (right_player.Y_Vel() < 0)
+	{
+		if (right_player.Y_Vel() > -1 * PaddleDec)
+		{
+
+			right_player.ResetYSpeed();
+		}
+		else
+		{
+			right_player.ChangeYSpeed(PaddleDec);
+		}
+	}
 }

@@ -2,6 +2,7 @@
 #define _Paddle_H_
 
 #include "DrawableObject.h"
+#include <cmath>
 
 class Paddle : public DrawableObject
 {
@@ -34,6 +35,8 @@ class Paddle : public DrawableObject
 
         float X_Vel();
         float Y_Vel();
+
+		float Velocity();
 
         int Score = 0;
 

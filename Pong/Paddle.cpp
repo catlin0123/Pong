@@ -101,6 +101,11 @@ float Paddle::Y_Max()
     return Center.Y + heightOffset;
 }
 
+float Paddle::Velocity()
+{
+	return sqrtf(x_inc * x_inc + y_inc * y_inc);
+}
+
 float Paddle::X_Vel()
 {
     return x_inc;

@@ -13,7 +13,7 @@ Ball::Ball(Point center, int rad, const float color[]) :
     DrawableObject(center, color)
 {
     radius = rad;
-    velocity = 1.0; 
+    velocity = min_velocity = 1.0; 
     x_vel = sqrt(2.0)/2;
     y_vel = sqrt(2.0)/2; 
 }
@@ -48,20 +48,60 @@ void Ball::Update()
     Center.Y += y_vel; 
 }
 
-void Ball::IncreaseSpeed()
+void Ball::IncreaseMinVelocity()
 {
-	if (velocity < radius / 2)
+	if (min_velocity + 0.5 < radius / 2)
 	{
-		ScaleVelocity(0.5);
+		min_velocity += 0.5;
+	}
+	else
+	{
+		min_velocity = radius / 2;
+	}
+	IncreaseSpeed();
+}
+
+void Ball::DecreaseMinVelocity()
+{
+	if (min_velocity - 0.5 > 1)
+	{
+		min_velocity -= 0.5;
+	}
+	else
+	{
+		min_velocity = 1;
+	}
+	DecreaseSpeed();
+}
+
+void Ball::IncreaseSpeed(float value)
+{
+	if (value > 0)
+	{
+		if (velocity + value < radius / 2)
+		{
+			ScaleVelocity(value);
+		}
+		else if (velocity < radius / 2)
+		{
+			ScaleVelocity((radius / 2) - velocity);
+		}
 	}
 }
 
-void Ball::DecreaseSpeed()
+void Ball::DecreaseSpeed(float value)
 {
-    if (velocity > 1)
-    {
-        ScaleVelocity(-0.5);
-    }
+	if (value > 0)
+	{
+		if (velocity - value > min_velocity)
+		{
+			ScaleVelocity(-1 * value);
+		}
+		else if (velocity > min_velocity)
+		{
+			ScaleVelocity(-1 * velocity - min_velocity);
+		}
+	}
 }
 
 void Ball::BounceOffPaddle(CollisionTypeEnum col)
@@ -189,4 +229,9 @@ float Ball::X_Max()
 float Ball::Y_Max()
 {
     return Center.Y + radius;
+}
+
+float Ball::Velocity()
+{
+	return velocity;
 }
