@@ -7,10 +7,17 @@
 class DrawableObject
 {
     protected:
+        /*!
+        * @brief the color of the object
+        */
         float _color[4];
 
     public:
+        /*!
+        * @brief the center location of the object.
+        */
         Point Center;
+
 		DrawableObject();
         DrawableObject(Point center, const float color[]);
         DrawableObject(DrawableObject &d); 
