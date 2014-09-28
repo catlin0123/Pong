@@ -6,11 +6,11 @@
 class Ball : public DrawableObject
 {
 private:
-    int radius; 
-    float velocity;
-	float min_velocity;
-    float x_vel; 
-    float y_vel; 
+    int _radius; 
+    float _velocity;
+	float _minVelocity;
+    float _xVel; 
+    float _yVel; 
     void ScaleVelocity(float inc); 
     
 public:

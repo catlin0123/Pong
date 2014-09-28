@@ -21,7 +21,7 @@ Wall::~Wall()
 
 void Wall::Draw()
 {
-    glColor3fv(Color);
+    glColor3fv(_color);
 
     glBegin(GL_LINES);
         glVertex2d(X_Min(), Y_Min());

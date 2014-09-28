@@ -7,11 +7,11 @@
 class Paddle : public DrawableObject
 {
     private:
-        float widthOffset; 
-        float heightOffset;
-        float originalHeight; 
-        float x_inc; 
-        float y_inc; 
+        float _widthOffset; 
+        float _heightOffset;
+        float _originalHeight; 
+        float _xInc; 
+        float _yInc; 
     
     public:
 		Paddle();

@@ -7,22 +7,22 @@ CollisionManager::CollisionManager()
 
 CollisionManager::~CollisionManager()
 {
-	Collisions.clear();
+	_collisions.clear();
 }
 
 void CollisionManager::RegisterCollision(DrawableObject *collider, DrawableObject *collidee, void(*collide)(CollisionTypeEnum))
 {
-	Collisions[make_pair(collider, collidee)] = collide;
+	_collisions[make_pair(collider, collidee)] = collide;
 }
 
 void CollisionManager::ClearCollisions()
 {
-	Collisions.clear();
+	_collisions.clear();
 }
 
 void CollisionManager::CheckAndExecuteCollisions()
 {
-	for (pair<pair<DrawableObject*, DrawableObject*>, void(*)(CollisionTypeEnum)> objs : Collisions)
+	for (pair<pair<DrawableObject*, DrawableObject*>, void(*)(CollisionTypeEnum)> objs : _collisions)
 	{
 		CollisionTypeEnum temp = objs.first.first->didCollide(*(objs.first.second));
 		if (temp != NO_COLLISION)

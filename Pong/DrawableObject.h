@@ -7,7 +7,7 @@
 class DrawableObject
 {
     protected:
-        float Color[4];
+        float _color[4];
 
     public:
         Point Center;

@@ -5,127 +5,127 @@
 Paddle::Paddle() :
 	DrawableObject()
 {
-	x_inc = 0;
-	y_inc = 0;
-	widthOffset = 0;
-	heightOffset = 0;
-    originalHeight = 0; 
+	_xInc = 0;
+	_yInc = 0;
+	_widthOffset = 0;
+	_heightOffset = 0;
+    _originalHeight = 0; 
 }
 
 Paddle::Paddle(Point center, float width, float height, const float color[]) :
     DrawableObject(center, color)
 {
-    x_inc = 0; 
-    y_inc = 0; 
-    widthOffset = width / 2; 
-    heightOffset = height / 2; 
-    originalHeight = height / 2; 
+    _xInc = 0; 
+    _yInc = 0; 
+    _widthOffset = width / 2; 
+    _heightOffset = height / 2; 
+    _originalHeight = height / 2; 
 }
 
 Paddle::Paddle(Paddle &p) :
-    DrawableObject(p.Center, p.Color)
+    DrawableObject(p.Center, p._color)
 {
-    x_inc = p.x_inc; 
-    y_inc = p.y_inc;
-    widthOffset = p.widthOffset; 
-    heightOffset = p.heightOffset; 
-    originalHeight = p.originalHeight; 
+    _xInc = p._xInc; 
+    _yInc = p._yInc;
+    _widthOffset = p._widthOffset; 
+    _heightOffset = p._heightOffset; 
+    _originalHeight = p._originalHeight; 
 }
 
 void Paddle::Draw()
 {
-    glColor4fv(Color);
+    glColor4fv(_color);
     glBegin(GL_POLYGON); 
-        glVertex2f(Center.X + widthOffset, Center.Y + heightOffset); 
-        glVertex2f(Center.X + widthOffset, Center.Y - heightOffset);
-        glVertex2f(Center.X - widthOffset, Center.Y - heightOffset);
-        glVertex2f(Center.X - widthOffset, Center.Y + heightOffset);
+        glVertex2f(Center.X + _widthOffset, Center.Y + _heightOffset); 
+        glVertex2f(Center.X + _widthOffset, Center.Y - _heightOffset);
+        glVertex2f(Center.X - _widthOffset, Center.Y - _heightOffset);
+        glVertex2f(Center.X - _widthOffset, Center.Y + _heightOffset);
     glEnd();
 }
 void Paddle::Update()
 {
-    Center.X += x_inc;
-    Center.Y += y_inc; 
+    Center.X += _xInc;
+    Center.Y += _yInc; 
 }
 void Paddle::ChangeXSpeed(float inc)
 {
-    if (x_inc < widthOffset - 1  && x_inc > -1 * widthOffset + 1)
+    if (_xInc < _widthOffset - 1  && _xInc > -1 * _widthOffset + 1)
     {
-        x_inc += inc;
+        _xInc += inc;
     }
-    /*if (x_inc > -1 && x_inc < 1)
+    /*if (_xInc > -1 && _xInc < 1)
     {
         ResetXSpeed();
     }*/
 }
 void Paddle::ChangeYSpeed(float inc)
 {
-    if (y_inc < heightOffset - 2 && y_inc > -1 * heightOffset + 1)
+    if (_yInc < _heightOffset - 2 && _yInc > -1 * _heightOffset + 1)
     {
-        y_inc += inc;
+        _yInc += inc;
     }
-    /*if (y_inc > -1 && y_inc < 1)
+    /*if (_yInc > -1 && _yInc < 1)
     {
         ResetYSpeed(); 
     }*/
 }
 void Paddle::ResetXSpeed()
 {
-    x_inc = 0; 
+    _xInc = 0; 
 }
 void Paddle::ResetYSpeed()
 {
-    y_inc = 0; 
+    _yInc = 0; 
 }
 
 void Paddle::ResetSpeed()
 {
-    x_inc = 0; 
-    y_inc = 0; 
+    _xInc = 0; 
+    _yInc = 0; 
 }
 
 float Paddle::X_Min()
 {
-    return Center.X - widthOffset; 
+    return Center.X - _widthOffset; 
 }
 float Paddle::Y_Min()
 {
-    return Center.Y - heightOffset; 
+    return Center.Y - _heightOffset; 
 }
 float Paddle::X_Max()
 {
-    return Center.X + widthOffset; 
+    return Center.X + _widthOffset; 
 }
 float Paddle::Y_Max()
 {
-    return Center.Y + heightOffset;
+    return Center.Y + _heightOffset;
 }
 
 float Paddle::Velocity()
 {
-	return sqrtf(x_inc * x_inc + y_inc * y_inc);
+	return sqrtf(_xInc * _xInc + _yInc * _yInc);
 }
 
 float Paddle::X_Vel()
 {
-    return x_inc;
+    return _xInc;
 }
 
 float Paddle::Y_Vel()
 {
-    return y_inc;
+    return _yInc;
 }
 
 void Paddle::ReduceSize()
 {
-    if (heightOffset > widthOffset)
+    if (_heightOffset > _widthOffset)
     {
-        heightOffset -= .5;
+        _heightOffset -= .5;
     }
 }
 
 void Paddle::ResetSize()
 {
-    heightOffset = originalHeight; 
+    _heightOffset = _originalHeight; 
 }
 

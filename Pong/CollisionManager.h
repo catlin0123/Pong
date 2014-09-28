@@ -16,6 +16,6 @@ public:
 	void CheckAndExecuteCollisions();
 
 private:
-	map<pair<DrawableObject*, DrawableObject*>, void(*)(CollisionTypeEnum)> Collisions;
+	map<pair<DrawableObject*, DrawableObject*>, void(*)(CollisionTypeEnum)> _collisions;
 };
 

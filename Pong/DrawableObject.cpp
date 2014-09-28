@@ -10,7 +10,7 @@ DrawableObject::DrawableObject()
 	Center = center;
     for (int i = 0; i < 4; i++)
     {
-        Color[i] = color[i];
+        _color[i] = color[i];
     }
 }
 
@@ -20,7 +20,7 @@ DrawableObject::DrawableObject()
 
      for (int i = 0; i < 4; i++)
      {
-         Color[i] = d.Color[i];
+         _color[i] = d._color[i];
      }
  }
 
