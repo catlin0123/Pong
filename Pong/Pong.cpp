@@ -30,11 +30,17 @@
 * @section compile_section Compiling and Usage
 *
 * @par Compiling Instructions:
-*      <did you do anything special to compile the program>
+@verbatim
+c:\> make pong
+@endverbatim
 *
 * @par Usage:
 @verbatim
-c:\> pong.exe
+On Windows:
+	c:\> pong.exe
+
+On Linux:
+	c:\> ./pong
 @endverbatim
 *
 * @section todo_bugs_modification_section Todo, Bugs, and Modifications
@@ -232,7 +238,8 @@ void Display(void)
     if (PAUSED)
     {
 		float alphaBlack[4] = { 0.0, 0.0, 0.0, .60 };
-		Paddle temp = Paddle(Point(100, 50), 200, 100, alphaBlack);
+		Paddle temp;
+		temp = Paddle(Point(100, 50), 200, 100, alphaBlack);
 		temp.Draw();
 
 		glColor4fv(WHITE);

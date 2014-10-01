@@ -1,3 +1,8 @@
+/*************************************************************************//**
+* @file
+*
+* @brief The header file for the Wall
+****************************************************************************/
 #pragma once
 #include "DrawableObject.h"
 
@@ -5,7 +10,14 @@ class Wall :
 	public DrawableObject
 {
 public:
+	/*!
+	* @brief The orientation of the wall (HORIZONTAL/VERTICAL)
+	*/
 	OrientationEnum Orientation;
+
+	/*!
+	* @brief Length of the wall
+	*/
 	float Length;
 
 	Wall();

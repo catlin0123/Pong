@@ -1,3 +1,8 @@
+/*************************************************************************//**
+* @file
+*
+* @brief The header file for the Paddle
+****************************************************************************/
 #ifndef _Paddle_H_
 #define _Paddle_H_
 
@@ -7,13 +12,38 @@
 class Paddle : public DrawableObject
 {
     private:
+		/*!
+		* @brief 1/2 the width of the Paddle
+		*/
         float _widthOffset; 
-        float _heightOffset;
-        float _originalHeight; 
-        float _xInc; 
+
+		/*!
+		* @brief 1/2 the height of the Paddle
+		*/
+		float _heightOffset;
+
+		/*!
+		* @brief 1/2 the original height of the Paddle
+		*/
+		float _originalHeight;
+
+		/*!
+		* @brief x increment during each update
+		*/
+		float _xInc;
+
+		/*!
+		* @brief y increment during each update
+		*/
         float _yInc; 
     
-    public:
+	public:
+
+		/*!
+		* @brief Points accumulated by the paddle
+		*/
+        int Score = 0;
+
 		Paddle();
         Paddle(Point center, float width, float height, const float color[]);
         Paddle(Paddle &p);
@@ -37,8 +67,6 @@ class Paddle : public DrawableObject
         float Y_Vel();
 
 		float Velocity();
-
-        int Score = 0;
 
         void ReduceSize(); 
         void ResetSize(); 

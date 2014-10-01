@@ -1,3 +1,8 @@
+/*************************************************************************//**
+* @file
+*
+* @brief The header file for the DrawableObject
+****************************************************************************/
 #ifndef _DrawableObject_H_
 #define _DrawableObject_H_
 

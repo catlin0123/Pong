@@ -1,7 +1,7 @@
 /*************************************************************************//**
 * @file
 *
-* @brief THe header file for the ball class. 
+* @brief The header file for the ball class. 
 ****************************************************************************/
 #ifndef _Ball_H_
 #define _Ball_H_
